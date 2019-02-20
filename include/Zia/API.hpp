@@ -14,3 +14,4 @@
 #include "API/Response.hpp"
 #include "API/Module.hpp"
 #include "API/RequestHandler.hpp"
+#include "API/Info.hpp"

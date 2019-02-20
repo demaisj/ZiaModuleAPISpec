@@ -7,8 +7,15 @@
 
 #pragma once
 
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wparentheses"
+#include <boost/variant.hpp>
+#pragma GCC diagnostic pop
+
 #include <string>
-#include <unordered_map>
+#include <vector>
+#include <map>
+#include <unordered_map> // Should be removed
 
 #include "Definitions.hpp"
 
@@ -48,12 +55,36 @@ struct ServerConfig {
     Platform platform;
 
     /*
-     * Server config:
-     *     A map of config values provided by the user.
-     *     The config cannot have depth. Instead, it should be "emulated" using
-     *     dot notation. for example "this.is.deep"
+     * Represents a json null value
      */
-    std::unordered_map<std::string, std::string> config;
+    struct Null {};
+
+    /*
+     * Server config:
+     *     Represents any json value
+     */
+    using Value = boost::make_recursive_variant<std::string,
+												int,
+												double,
+												bool,
+												std::map<std::string, boost::recursive_variant_>,
+												std::vector<boost::recursive_variant_>,
+												Null>::type;
+
+    /*
+     * Represents a json array
+     */
+    using Array = std::vector<Value>;
+
+    /*
+     * Represents a json object
+     */
+    using Object = std::map<std::string, Value>;
+
+    /*
+     * Holds the configuration
+     */
+    Value config;
 
     /*
      * API spec version:

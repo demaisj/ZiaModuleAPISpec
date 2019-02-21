@@ -8,7 +8,6 @@
 #pragma once
 
 #include <string>
-#include <memory>
 
 #include "ServerConfig.hpp"
 #include "RequestHandler.hpp"
@@ -27,7 +26,9 @@ namespace API {
  */
 class Module {
 public:
-    using pointer = std::shared_ptr<Module>;
+    using pointer = Module*;
+    using factory = Module::pointer (*)();
+    using recycler = void (*)(Module::pointer);
 
     /*
      * INSTANTIATION:

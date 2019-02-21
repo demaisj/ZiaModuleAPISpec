@@ -42,7 +42,7 @@ public:
      * destructor:
      *     used to deallocate those same resources
      */
-    virtual ~RequestHandler();
+    virtual ~RequestHandler() {};
 
     /*
      * CONNECTION HOOKS:

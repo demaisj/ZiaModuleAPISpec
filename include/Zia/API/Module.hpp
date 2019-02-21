@@ -37,7 +37,7 @@ public:
      * destructor:
      *     used to deallocate those same resources
      */
-    virtual ~Module();
+    virtual ~Module() {};
 
     /*
      * METADATA:

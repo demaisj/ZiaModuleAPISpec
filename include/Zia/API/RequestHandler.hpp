@@ -11,6 +11,8 @@
 #include <vector>
 #include <boost/asio.hpp>
 
+using boost::asio::ip::tcp;
+
 #include "HookResult.hpp"
 #include "Request.hpp"
 #include "Response.hpp"
@@ -54,8 +56,8 @@ public:
      *     called when the server has generated a response
      *     this hook should write the entiere response from the provided buffer into the socket
      */
-    virtual HookResultType onReadRequest(boost::asio::ip::tcp::socket& sock, std::vector<char>& buf) { return HookResult::Declined; }
-    virtual HookResultType onWriteResponse(boost::asio::ip::tcp::socket& sock, const std::vector<char>& buf) { return HookResult::Declined; }
+    virtual HookResultType onReadRequest(tcp::socket& sock, std::vector<char>& buf) { return HookResult::Declined; }
+    virtual HookResultType onWriteResponse(tcp::socket& sock, const std::vector<char>& buf) { return HookResult::Declined; }
 
     /*
      * REQUEST HOOKS:

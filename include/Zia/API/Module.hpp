@@ -26,6 +26,17 @@ namespace API {
  */
 class Module {
 public:
+
+    /*
+     * TYPES:
+     *
+     * pointer:
+     *     pointer type for the Module class
+     * factory:
+     *     prototype for the module factory function
+     * recycler:
+     *     prototype for the module recycler function
+     */
     using pointer = Module*;
     using factory = Module::pointer (*)();
     using recycler = void (*)(Module::pointer);
@@ -70,12 +81,6 @@ public:
      *     creates a new instance of a Request Handler.
      */
     virtual RequestHandler::pointer newRequestHandler() = 0;
-
-    /*
-     * SERVER-LEVEL HOOKS:
-     *
-     * [TBD]
-     */
 };
 
 }

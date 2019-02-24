@@ -12,9 +12,24 @@
 namespace Zia {
 namespace API {
 
+/*
+ * CONNECTION OBJECT
+ *
+ * Contains all information about the current connection.
+ */
 struct Connection
 {
+
+    /*
+     * Remote address (ip):
+     *     127.0.0.1
+     */
     std::string addr;
+
+    /*
+     * Remote port:
+     *     4242
+     */
     unsigned short port;
 };
 

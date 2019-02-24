@@ -32,6 +32,13 @@ namespace API {
  */
 class RequestHandler {
 public:
+
+    /*
+     * TYPES:
+     *
+     * pointer:
+     *     pointer type for the RequestHandler class
+     */
     using pointer = std::shared_ptr<RequestHandler>;
 
     /*
@@ -50,12 +57,16 @@ public:
     /*
      * CONNECTION HOOKS:
      *
-     * onConnectionRead:
+     * onConnectionStart:
      *     called when the server accepted the connection
-     *     this hook should read the entiere request from the socket into the provided buffer.
+     * onConnectinEnd:
+     *     called when the server is about to close the connection
+     * onConnectionRead:
+     *     called when the server needs to read incoming data
+     *     this hook must read available data into the buffer and report the size read
      * onConnectionWrite:
-     *     called when the server has generated a response
-     *     this hook should write the entiere response from the provided buffer into the socket
+     *     called when the server needs to write outgoing data
+     *     this hook must write available data from the buffer and report the size written
      */
     virtual HookResultType onConnectionStart(const Connection& conn, tcp::socket& sock) { return HookResult::Declined; }
     virtual HookResultType onConnectionEnd(const Connection& conn, tcp::socket& sock) { return HookResult::Declined; }
@@ -71,8 +82,8 @@ public:
      * onRequest:
      *     this hook process the request and generates a response
      * onRequestError:
-     *     this hook is called if a previous hook returned with a HTTP error code
-     *     it should generate the error response.
+     *     this hook is called if the onBeforeRequest or onRequest hook returned
+     *     with a HTTP error code. it should generate the error response.
      * onResponse:
      *     called after calling onRequest
      *     can be used to alter the outgoing response before sending it

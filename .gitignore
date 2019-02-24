@@ -600,3 +600,5 @@ misc/
 peda-session-*
 
 .vscode
+
+!samples/modules/log/

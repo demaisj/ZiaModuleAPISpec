@@ -16,6 +16,7 @@ using boost::asio::ip::tcp;
 #include "HookResult.hpp"
 #include "Request.hpp"
 #include "Response.hpp"
+#include "Connection.hpp"
 
 namespace Zia {
 namespace API {
@@ -49,20 +50,22 @@ public:
     /*
      * CONNECTION HOOKS:
      *
-     * onReadResponse:
+     * onConnectionRead:
      *     called when the server accepted the connection
      *     this hook should read the entiere request from the socket into the provided buffer.
-     * onWriteResponse:
+     * onConnectionWrite:
      *     called when the server has generated a response
      *     this hook should write the entiere response from the provided buffer into the socket
      */
-    virtual HookResultType onReadRequest(tcp::socket& sock, std::vector<char>& buf) { return HookResult::Declined; }
-    virtual HookResultType onWriteResponse(tcp::socket& sock, const std::vector<char>& buf) { return HookResult::Declined; }
+    virtual HookResultType onConnectionStart(const Connection& conn, tcp::socket& sock) { return HookResult::Declined; }
+    virtual HookResultType onConnectionEnd(const Connection& conn, tcp::socket& sock) { return HookResult::Declined; }
+    virtual HookResultType onConnectionRead(const Connection& conn, tcp::socket& sock, std::vector<char>& buf, size_t& read) { return HookResult::Declined; }
+    virtual HookResultType onConnectionWrite(const Connection& conn, tcp::socket& sock, const std::vector<char>& buf, size_t& written) { return HookResult::Declined; }
 
     /*
      * REQUEST HOOKS:
      *
-     * onPreRequest:
+     * onBeforeRequest:
      *     called before calling onRequest
      *     can be used to alter the incoming request before processing it
      * onRequest:
@@ -74,10 +77,10 @@ public:
      *     called after calling onRequest
      *     can be used to alter the outgoing response before sending it
      */
-    virtual HookResultType onPreRequest(Request& req) { return HookResult::Declined; }
-    virtual HookResultType onRequest(const Request& req, Response& res) { return HookResult::Declined; }
-    virtual HookResultType onRequestError(int status, Response& res) { return HookResult::Declined; }
-    virtual HookResultType onResponse(Response& res) { return HookResult::Declined; }
+    virtual HookResultType onBeforeRequest(const Connection& conn, Request& req) { return HookResult::Declined; }
+    virtual HookResultType onRequest(const Connection& conn, const Request& req, Response& res) { return HookResult::Declined; }
+    virtual HookResultType onRequestError(const Connection& conn, int status, Response& res) { return HookResult::Declined; }
+    virtual HookResultType onResponse(const Connection& conn, Response& res) { return HookResult::Declined; }
 };
 
 }

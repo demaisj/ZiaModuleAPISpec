@@ -70,9 +70,9 @@ public:
      * onConfigChange:
      *     called when the server configuration is updated
      */
-    virtual void onActivate(const ServerConfig& cfg) { }
+    virtual void onActivate(const ServerConfig& /* cfg */) { }
     virtual void onDeactivate() { }
-    virtual void onConfigChange(const ServerConfig& cfg) { }
+    virtual void onConfigChange(const ServerConfig& /* cfg */) { }
 
     /*
      * REQUEST HANDLER:

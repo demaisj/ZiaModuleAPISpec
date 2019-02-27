@@ -5,6 +5,8 @@
 ** Various utilities
 */
 
+#pragma once
+
 /*
  * ZIA_API_EXPORT macro:
  * Used to export factory & recycler functions for each module.

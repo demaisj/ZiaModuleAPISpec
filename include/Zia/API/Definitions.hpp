@@ -18,7 +18,7 @@ namespace Definitions {
  *
  * will be incremented as this spec evolves
  */
-static const std::string VERSION = "1.1.0";
+static const std::string VERSION = "1.1.1";
 
 }
 }

@@ -5,3 +5,5 @@ set(CMAKE_CXX_STANDARD 11)
 
 add_library(ZiaModuleAPISpec INTERFACE)
 target_include_directories(ZiaModuleAPISpec INTERFACE include/)
+
+add_subdirectory(samples/modules/log)

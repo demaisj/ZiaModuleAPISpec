@@ -23,25 +23,25 @@ class RequestHandler : public API::RequestHandler
 public:
     using clock_type = std::chrono::steady_clock;
 
-    API::HookResultType onConnectionStart(const API::Connection& conn, tcp::socket& sock) override
+    API::HookResultType onConnectionStart(const API::Connection& /* conn */, tcp::socket& /* sock */) override
     {
         _start = clock_type::now();
         return API::HookResult::Declined;
     }
 
-    API::HookResultType onRequest(const API::Connection& conn, const API::Request& req, API::Response& res) override
+    API::HookResultType onRequest(const API::Connection& /* conn */, const API::Request& req, API::Response& /* res */) override
     {
         _req = req;
         return API::HookResult::Declined;
     }
 
-    API::HookResultType onResponse(const API::Connection& conn, API::Response& res) override
+    API::HookResultType onResponse(const API::Connection& /* conn */, API::Response& res) override
     {
         _res = res;
         return API::HookResult::Declined;
     }
 
-    API::HookResultType onConnectionEnd(const API::Connection& conn, tcp::socket& sock) override
+    API::HookResultType onConnectionEnd(const API::Connection& /* conn */, tcp::socket& /* sock */) override
     {
         auto elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(clock_type::now() - _start);
         std::cout
